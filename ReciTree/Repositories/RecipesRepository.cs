@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ReciTree.Repositories
 {
     public class RecipesRepository
@@ -12,6 +7,10 @@ namespace ReciTree.Repositories
         public RecipesRepository(IDbConnection db)
         {
             _db = db;
+        }
+
+        internal Recipe CreateRecipe(Recipe recipeData)
+        {
         }
     }
 }

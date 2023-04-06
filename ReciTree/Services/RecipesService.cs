@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ReciTree.Services
 {
     public class RecipesService
@@ -12,6 +7,12 @@ namespace ReciTree.Services
         public RecipesService(RecipesRepository repo)
         {
             _repo = repo;
+        }
+
+        internal Recipe CreateRecipe(Recipe recipeData)
+        {
+            Recipe recipe = _repo.CreateRecipe(recipeData);
+            return recipe;
         }
     }
 }

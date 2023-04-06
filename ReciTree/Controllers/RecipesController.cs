@@ -33,12 +33,28 @@ namespace ReciTree.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Recipe>> GetRecipes()
+        public async Task<ActionResult<List<Recipe>>> GetRecipes()
         {
             try
             {
-                List<Recipe> recipes = _recipesService.GetRecipes();
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                List<Recipe> recipes = _recipesService.GetRecipes(userInfo?.Id);
                 return Ok(recipes);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Recipe>> GetOneRecipe(int id)
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Recipe recipe = _recipesService.GetOneRecipe(id, userInfo?.Id);
+                return Ok(recipe);
             }
             catch (Exception e)
             {

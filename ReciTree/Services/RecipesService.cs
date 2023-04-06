@@ -14,5 +14,11 @@ namespace ReciTree.Services
             Recipe recipe = _repo.CreateRecipe(recipeData);
             return recipe;
         }
+
+        internal List<Recipe> GetRecipes()
+        {
+            List<Recipe> recipes = _repo.GetRecipes();
+            return recipes;
+        }
     }
 }

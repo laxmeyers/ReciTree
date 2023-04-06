@@ -23,6 +23,17 @@ namespace ReciTree.Repositories
             return recipeData;
         }
 
+        internal int DeleteRecipe(int id)
+        {
+            string sql = @"
+            Delete
+            from recipes 
+            where id = @id;
+            ";
+            int rows = _db.Execute(sql, new { id });
+            return rows;
+        }
+
         internal Recipe getOneRecipe(int id)
         {
             string sql = @"
@@ -46,11 +57,33 @@ namespace ReciTree.Repositories
         {
             string sql = @"
             Select 
-            * 
-            from recipes;
+            rec.*,
+            acc.* 
+            from recipes rec
+            join accounts acc on acc.id = rec.creatorId;
             ";
-            List<Recipe> recipes = _db.Query<Recipe>(sql).ToList();
+            List<Recipe> recipes = _db.Query<Recipe, Profile, Recipe>(sql, (rec, prof) =>
+            {
+                rec.Creator = prof;
+                return rec;
+            }).ToList();
             return recipes;
+        }
+
+        internal int UpdateRecipe(Recipe original)
+        {
+            string sql = @"
+            UPDATE recipes
+            set
+            name = @name,
+            img = @img,
+            category = @category,
+            instructions = @instructions,
+            instructionsPic = @instructionsPic
+            WHERE id = @id;
+            ";
+            int rows = _db.Execute(sql, original);
+            return rows;
         }
     }
 }

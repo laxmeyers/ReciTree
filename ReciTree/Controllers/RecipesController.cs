@@ -61,5 +61,40 @@ namespace ReciTree.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<string>> DeleteRecipe(int id)
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Recipe recipe = _recipesService.DeleteRecipe(id, userInfo.Id);
+                return Ok($"{recipe.Name} was deleted");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+
+        public async Task<ActionResult<Recipe>> UpdateRecipe(int id, [FromBody] Recipe recipeData)
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                recipeData.CreatorId = userInfo.Id;
+                Recipe recipe = _recipesService.UpdateRecipe(id, recipeData);
+                return Ok(recipe);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

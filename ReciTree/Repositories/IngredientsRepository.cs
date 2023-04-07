@@ -27,7 +27,15 @@ namespace ReciTree.Repositories
 
     internal List<Ingredient> GetIngredientsForRecipe(int recipeId)
     {
-      throw new NotImplementedException();
+        string sql = @"
+        SELECT
+        *
+        FROM ingredients
+        WHERE recipeId = @recipeId;
+        ";
+
+        List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new{recipeId}).ToList();
+        return ingredients;
     }
-  }
+    }
 }

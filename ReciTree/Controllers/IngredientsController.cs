@@ -47,6 +47,16 @@ namespace ReciTree.Controllers
         }
     }
 
+    [HttpPut("{id}")]
+    [Authorize]
+
+    public async Task<ActionResult<Ingredient>> UpdateIngredient([FromBody] Ingredient updata, int id){
+        Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+        updata.Id = id;
+        Ingredient ingredient = _ingredientsService.UpdateIngredient(updata, userInfo);
+        return ingredient;
+    }
+
 
     }
 }

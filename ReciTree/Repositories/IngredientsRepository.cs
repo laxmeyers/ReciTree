@@ -61,5 +61,22 @@ namespace ReciTree.Repositories
         List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new{recipeId}).ToList();
         return ingredients;
     }
+
+    internal int UpdateIngredient(Ingredient original)
+    {
+        string sql = @"
+        UPDATE
+        ingredients
+        SET
+        measurement = @measurement,
+        quantity = @quantity,
+        WHERE
+        id = @id;
+
+        ";
+
+        int rows = _db.Execute(sql, original);
+        return rows;
+    }
     }
 }

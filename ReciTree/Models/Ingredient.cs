@@ -1,6 +1,6 @@
 namespace ReciTree.Models
 {
-  public class Ingredients : RepoItem<int>
+  public class Ingredient : RepoItem<int>
     {
         public string Name { get; set; }
         public string Measurement { get; set; }

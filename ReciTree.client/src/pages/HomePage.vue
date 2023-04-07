@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <section class="masonry">
-      <div v-for="r in recipes">
-        <Recipe :recipe="r" />
+    <div class="row">
+      <div class="col-md-12">
+        <section class="masonry">
+          <div v-for="r in recipes">
+            <Recipe :recipe="r" />
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 

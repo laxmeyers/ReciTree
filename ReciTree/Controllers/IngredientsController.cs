@@ -1,35 +1,36 @@
 namespace ReciTree.Controllers
 {
-  [ApiController]
+    [ApiController]
     [Route("api/[controller]")]
     public class IngredientsController : ControllerBase
     {
         private readonly IngredientsService _ingredientsService;
         private readonly Auth0Provider _auth;
 
-    public IngredientsController(IngredientsService ingredientsService, Auth0Provider auth)
-    {
-      _ingredientsService = ingredientsService;
-      _auth = auth;
-    }
-
-
-    [HttpPost("{recipeId}")]
-    [Authorize]
-
-    public async Task<ActionResult<Ingredient>> CreateIngredientForRecipe([FromBody] Ingredient ingredientData, int recipeId){
-        try 
+        public IngredientsController(IngredientsService ingredientsService, Auth0Provider auth)
         {
-            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
-            
-            Ingredient ingredient = _ingredientsService.CreateIngredientForRecipe(ingredientData, recipeId, userInfo);
-            return ingredient;
+            _ingredientsService = ingredientsService;
+            _auth = auth;
         }
-        catch (Exception e)
+
+
+        [HttpPost]
+        [Authorize]
+
+        public async Task<ActionResult<Ingredient>> CreateIngredientForRecipe([FromBody] Ingredient ingredientData)
         {
-            return BadRequest(e.Message);
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+
+                Ingredient ingredient = _ingredientsService.CreateIngredientForRecipe(ingredientData, userInfo);
+                return ingredient;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-    }
 
     [HttpGet("{recipeId}")]
     public async Task<ActionResult<List<Ingredient>>> GetIngredientsForRecipe(int recipeId){

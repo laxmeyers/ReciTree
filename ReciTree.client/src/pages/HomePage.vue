@@ -1,22 +1,34 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
     <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+      {{ recipes }}
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted, computed } from 'vue';
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { recipesService } from '../services/RecipesService';
+import { AppState } from '../AppState.js';
+
 export default {
   setup() {
-    return {}
+    async function getAllRecipes() {
+      try {
+        await recipesService.getAllRecipes();
+
+      } catch (error) {
+        logger.error(error.message)
+      }
+    }
+    onMounted(() => {
+      getAllRecipes()
+    })
+    return {
+      recipes: computed(() => AppState.recipes)
+    }
   }
 }
 </script>

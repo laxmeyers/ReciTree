@@ -6,15 +6,17 @@ namespace ReciTree.Controllers
     {
         private readonly RecipesService _recipesService;
         private readonly Auth0Provider _auth;
+        private readonly IngredientsService _ingredientsService;
 
-        public RecipesController(RecipesService recipesService, Auth0Provider auth)
-        {
-            _recipesService = recipesService;
-            _auth = auth;
-        }
+    public RecipesController(RecipesService recipesService, Auth0Provider auth, IngredientsService ingredientsService)
+    {
+      _recipesService = recipesService;
+      _auth = auth;
+      _ingredientsService = ingredientsService;
+    }
 
 
-        [HttpPost]
+    [HttpPost]
         [Authorize]
         public async Task<ActionResult<Recipe>> CreateRecipe([FromBody] Recipe recipeData)
         {
@@ -95,6 +97,20 @@ namespace ReciTree.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{recipeId}/ingredients")]
+    public async Task<ActionResult<List<Ingredient>>> GetIngredientsForRecipe(int recipeId){
+        try 
+        {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            List<Ingredient> ingredients = _ingredientsService.GetIngredientsForRecipe(recipeId, userInfo?.Id);
+            return ingredients;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
     }
 }

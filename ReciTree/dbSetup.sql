@@ -8,6 +8,8 @@ CREATE TABLE
         picture varchar(255) COMMENT 'User Picture'
     ) default charset utf8 COMMENT '';
 
+-- Section Recipes
+
 CREATE Table
     recipes(
         id int AUTO_INCREMENT not Null PRIMARY KEY,
@@ -22,3 +24,24 @@ CREATE Table
     ) default charset utf8 COMMENT '';
 
 DROP TABLE recipes;
+
+-- Section Ingredients
+
+CREATE TABLE
+    IF NOT EXISTS ingredients(
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        name VARCHAR(500) NOT NULL,
+        measurement VARCHAR(500) NOT NULL,
+        quantity INT NOT NULL,
+        recipeId INT NOT NULL,
+        Foreign Key (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
+
+insert into
+    ingredients (
+        name,
+        measurement,
+        quantity,
+        recipeId
+    )
+VALUES ("milk", "cups", 2, 3);

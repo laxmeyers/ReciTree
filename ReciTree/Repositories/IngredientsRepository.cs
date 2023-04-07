@@ -33,7 +33,7 @@ namespace ReciTree.Repositories
         WHERE id = @id;
         ";
 
-        int rows = _db.Execute(sql, id);
+        int rows = _db.Execute(sql, new{id});
         return rows;
     }
 

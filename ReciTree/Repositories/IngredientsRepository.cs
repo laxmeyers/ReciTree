@@ -25,6 +25,30 @@ namespace ReciTree.Repositories
         return ingredientData;
     }
 
+    internal int DeleteIngredientFromRecipe(int id)
+    {
+        string sql = @"
+        DELETE FROM
+        recipes
+        WHERE id = @id;
+        ";
+
+        int rows = _db.Execute(sql, id);
+        return rows;
+    }
+
+    internal Ingredient GetIngredientById(int id)
+    {
+        string sql = @"
+        SELECT
+        * FROM ingredients
+        WHERE id  = @id;
+        ";
+
+        Ingredient ingredient = _db.Query<Ingredient>(sql, new{id}).FirstOrDefault();
+        return ingredient;
+    }
+
     internal List<Ingredient> GetIngredientsForRecipe(int recipeId)
     {
         string sql = @"

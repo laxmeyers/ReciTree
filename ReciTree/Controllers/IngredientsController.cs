@@ -32,8 +32,20 @@ namespace ReciTree.Controllers
             }
         }
 
-    
-    
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<string>> DeleteIngredientFromRecipe(int id){
+        try 
+        {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            string message = _ingredientsService.DeleteIngredientFromRecipe(id, userInfo);
+            return message;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
 
     }

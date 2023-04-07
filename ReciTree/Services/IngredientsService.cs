@@ -43,5 +43,18 @@ namespace ReciTree.Services
         if(ingredient == null) throw new Exception("No ingredient at tha id man try again");
         return ingredient;
     }
+
+    internal Ingredient UpdateIngredient(Ingredient updata, Account userInfo)
+    {
+        Ingredient original = this.GetIngredientById(updata.Id);
+        Recipe recipe = _recipeService.GetOneRecipe(original.Id, userInfo.Id);
+        if(recipe.CreatorId != userInfo.Id) throw new Exception("Not your ingredient to edit man");
+        original.Measurement = updata.Measurement != null ? updata.Measurement : original.Measurement;
+        original.Quantity = updata.Quantity != null ? updata.Quantity : original.Quantity;
+        int rows = _repo.UpdateIngredient(original);
+        if(rows != 1) throw new Exception($"something went wrong {rows} ingredients eddited");
+        return original;
+
+    }
     }
 }

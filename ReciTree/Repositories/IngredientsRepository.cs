@@ -29,7 +29,7 @@ namespace ReciTree.Repositories
     {
         string sql = @"
         DELETE FROM
-        recipes
+        ingredients
         WHERE id = @id;
         ";
 

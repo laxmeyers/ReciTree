@@ -1,14 +1,15 @@
 <template>
-    <div class="container position-relative">
-        <img class="img-fluid rounded" :src="recipe?.img" :alt="recipe?.name">
-        <div class="over-img">
-            <h2>
-                {{ recipe?.name }}
-            </h2>
-            <img class="profile-img" :src="recipe?.creator.picture" :alt="recipe?.creator.name">
+    <router-link :to="{ name: 'Recipe', params: { recipeId: recipe.id } }">
+        <div class="container position-relative">
+            <img class="img-fluid rounded" :src="recipe?.img" :alt="recipe?.name">
+            <div class="over-img">
+                <h2>
+                    {{ recipe?.name }}
+                </h2>
+                <img class="profile-img" :src="recipe?.creator.picture" :alt="recipe?.creator.name">
+            </div>
         </div>
-
-    </div>
+    </router-link>
 </template>
 
 

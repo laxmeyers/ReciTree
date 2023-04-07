@@ -1,12 +1,12 @@
 <template>
     <div class="container position-relative">
-        <img :src="recipe.img" :alt="recipe.name">
+        <img :src="recipe?.img" :alt="recipe?.name">
         <div class="position-absolute">
             <div class="d-flex">
                 <h2>
-                    {{ recipe.name }}
+                    {{ recipe?.name }}
                 </h2>
-                <img class="profile-img" :src="recipe.creator.picture" :alt="recipe.creator.name">
+                <img class="profile-img" :src="recipe?.creator.picture" :alt="recipe?.creator.name">
             </div>
         </div>
 

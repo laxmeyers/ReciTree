@@ -2,7 +2,7 @@
   <div class="container">
     <section class="masonry">
       <div v-for="r in recipes">
-        <Recipe :recipes="r" />
+        <Recipe :recipe="r" />
       </div>
     </section>
   </div>

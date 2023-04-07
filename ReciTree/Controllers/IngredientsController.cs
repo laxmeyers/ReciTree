@@ -31,15 +31,17 @@ namespace ReciTree.Controllers
         }
     }
 
-    [HttpGet]
-    public Task<ActionResult<List<Ingredient>>> GetIngredientsForRecipe(){
+    [HttpGet("{recipeId}")]
+    public async Task<ActionResult<List<Ingredient>>> GetIngredientsForRecipe(int recipeId){
         try 
         {
-            
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            List<Ingredient> ingredients = _ingredientsService.GetIngredientsForRecipe(recipeId, userInfo?.Id);
+            return ingredients;
         }
         catch (Exception e)
         {
-            return Task.FromResult(BadRequest(e.Message));
+            return BadRequest(e.Message);
         }
     }
     

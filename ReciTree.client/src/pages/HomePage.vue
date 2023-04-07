@@ -13,18 +13,21 @@
 <script>
 import { onMounted } from 'vue';
 import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { recipesService } from '../services/RecipesService';
 
 export default {
   setup() {
     async function getAllRecipes() {
       try {
+        await recipesService.getAllRecipes();
 
       } catch (error) {
         logger.error(error.message)
       }
     }
     onMounted(() => {
-
+      getAllRecipes()
     })
     return {}
   }

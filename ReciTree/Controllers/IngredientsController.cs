@@ -12,5 +12,38 @@ namespace ReciTree.Controllers
       _ingredientsService = ingredientsService;
       _auth = auth;
     }
-  }
+
+
+    [HttpPost("{recipeId}")]
+    [Authorize]
+
+    public async Task<ActionResult<Ingredient>> CreateIngredientForRecipe([FromBody] Ingredient ingredientData, int recipeId){
+        try 
+        {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            
+            Ingredient ingredient = _ingredientsService.CreateIngredientForRecipe(ingredientData, recipeId, userInfo);
+            return ingredient;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet]
+    public Task<ActionResult<List<Ingredient>>> GetIngredientsForRecipe(){
+        try 
+        {
+            
+        }
+        catch (Exception e)
+        {
+            return Task.FromResult(BadRequest(e.Message));
+        }
+    }
+    
+
+
+    }
 }

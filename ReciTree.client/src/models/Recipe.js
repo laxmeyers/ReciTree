@@ -11,5 +11,6 @@ export class Recipe {
         this.creator = new Profile(data.creator)
         this.category = data.category
         this.isPrivate = data.isPrivate
+
     }
 }

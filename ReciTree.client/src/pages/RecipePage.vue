@@ -1,13 +1,36 @@
 <template>
-    <div class="component">
+    <div v-if="recipe">
+        <div class="container-fluid">
+            <div class="row p-3">
 
-        {{ recipe?.name }}
+                <div class="col-md-12 text-center">
+                    <img :src="recipe.img" class="elevation-5 " alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card elevation-2">
+                        <div class="card-body">
+                            <h2>{{ recipe.instructions }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card elevation-2">
+                        <div class="card-body">
+                            <h2>ingredients here</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 
 <script>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { recipesService } from '../services/RecipesService';
 import { AppState } from '../AppState';
@@ -25,6 +48,9 @@ export default {
         }
         onMounted(() => {
             getThisRecipe()
+        })
+        onUnmounted(() => {
+            AppState.recipe = []
         })
         return {
             recipe: computed(() => AppState.recipe)

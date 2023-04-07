@@ -24,5 +24,10 @@ namespace ReciTree.Repositories
         ingredientData.Id = id;
         return ingredientData;
     }
+
+    internal List<Ingredient> GetIngredientsForRecipe(int recipeId)
+    {
+      throw new NotImplementedException();
     }
+  }
 }

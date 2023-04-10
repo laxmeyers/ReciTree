@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ReciTree.Repositories
 {
     public class BranchesRepository
     {
-        
+        private readonly IDbConnection _db;
+
+        public BranchesRepository(IDbConnection db)
+        {
+            _db = db;
+        }
     }
 }

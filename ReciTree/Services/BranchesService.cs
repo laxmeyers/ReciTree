@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ReciTree.Services
 {
     public class BranchesService
     {
-        
+        private readonly BranchesRepository _repo;
+
+        public BranchesService(BranchesRepository repo)
+        {
+            _repo = repo;
+        }
     }
 }

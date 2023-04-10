@@ -45,3 +45,14 @@ insert into
         recipeId
     )
 VALUES ("milk", "cups", 2, 3);
+
+create table
+    branches (
+        id int AUTO_INCREMENT PRIMARY KEY not NULL,
+        name VARCHAR(255) not null,
+        description VARCHAR(500) not null,
+        img VARCHAR(500) not null,
+        isPrivate BOOLEAN not NULL DEFAULT false,
+        creatorId VARCHAR(255) not null,
+        Foreign Key (creatorId) REFERENCES accounts(id) on delete CASCADE
+    ) default charset utf8 COMMENT '';

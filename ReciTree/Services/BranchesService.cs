@@ -8,5 +8,11 @@ namespace ReciTree.Services
         {
             _repo = repo;
         }
+
+        internal Branch CreateBranch(Branch branchData)
+        {
+            Branch branch = _repo.CreateBranch(branchData);
+            return branch;
+        }
     }
 }

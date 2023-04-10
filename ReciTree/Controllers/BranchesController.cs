@@ -12,5 +12,23 @@ namespace ReciTree.Controllers
             _branchesService = branchesService;
             _auth = auth;
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<Branch>> CreateBranch([FromBody] Branch branchData)
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                branchData.CreatorId = userInfo.Id;
+                Branch branch = _branchesService.CreateBranch(branchData);
+                branch.Creator = userInfo;
+                return Ok(branch);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

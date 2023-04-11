@@ -22,5 +22,22 @@ namespace ReciTree.Repositories
             branchData.Id = id;
             return branchData;
         }
+
+        internal List<Branch> GetAllBranches()
+        {
+            string sql = @"
+            select 
+            bch.*,
+            creator.* 
+            from branches bch
+            join accounts creator on creator.id = bch.creatorId;
+            ";
+            List<Branch> branches = _db.Query<Branch, Profile, Branch>(sql, (bch, creator) =>
+            {
+                bch.Creator = creator;
+                return bch;
+            }).ToList();
+            return branches;
+        }
     }
 }

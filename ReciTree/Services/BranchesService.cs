@@ -14,5 +14,12 @@ namespace ReciTree.Services
             Branch branch = _repo.CreateBranch(branchData);
             return branch;
         }
+
+        internal List<Branch> GetAllBranches(string userId)
+        {
+            List<Branch> branches = _repo.GetAllBranches();
+            branches = branches.FindAll(b => b.IsPrivate == false || b.CreatorId == userId);
+            return branches;
+        }
     }
 }

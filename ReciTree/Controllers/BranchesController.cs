@@ -30,5 +30,20 @@ namespace ReciTree.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Branch>>> GetAllBranches()
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                List<Branch> branches = _branchesService.GetAllBranches(userInfo?.Id);
+                return Ok(branches);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

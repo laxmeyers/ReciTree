@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="card elevation-2">
                         <div class="card-body">
-                            <h2>ingredients here</h2>
+                            <h2>ingredients go here</h2>
                         </div>
                     </div>
                 </div>
